@@ -11,14 +11,14 @@ class ProjectsController < ApplicationController
 
 		if @project.save
 			flash[:notice] = "Project has been created."
-			redirect_to projects_path(@project)
+			redirect_to @project
 		else 
 			# nothing yet
 		end
 	end
 
 	def show
-		@project = Project.find(params[:format])
+		@project = Project.find(params[:id])
 	end
 
 	private
