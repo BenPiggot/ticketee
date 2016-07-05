@@ -7,6 +7,10 @@ gem 'rails', '4.2.4'
 gem 'sqlite3'
 gem 'pg'
 
+#for authentication
+gem 'devise'
+gem 'warden'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass'
