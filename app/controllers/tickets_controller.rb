@@ -1,7 +1,7 @@
 class TicketsController < ApplicationController
 
 	before_action :set_project
-	before_action :set_ticket, only: [:show, :edit, :update, :destory]
+	before_action :set_ticket, only: [:show, :edit, :update, :destroy]
 
 	def new
 		@ticket = @project.tickets.build
@@ -20,6 +20,26 @@ class TicketsController < ApplicationController
 	end
 
 	def show
+	end
+
+	def edit
+	end
+
+	def update
+		if @ticket.update(ticket_params)
+			flash[:notice] = "Ticket has been updated."
+			redirect_to [@project, @ticket]
+		else 
+			flash.now[:alert] = "Ticket has not been updated."
+			render "edit"
+		end
+	end
+
+	def destroy
+		@ticket.destroy
+		flash[:notice] = "Ticket has been deleted."
+
+		redirect_to @project
 	end
 
 
