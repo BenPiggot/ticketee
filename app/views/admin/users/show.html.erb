@@ -4,5 +4,10 @@
 	<ul class="actoins">
 		<li>
 			<%= link_to fa_icon("pencil") + " Edit User", [:edit, :admin, @user], class: "btn btn-pencil" %>
+		</li>
+		<li>
+			<%= link_to fa_icon("trash") + " Archive User", [:archive, :admin, @user], method: :patch,
+			data: { confirm: "Are you sure you want to archive this user?" }, class: "btn btn-danger" %>
+		</li>
 	</ul>
 </div>
