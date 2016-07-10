@@ -10,6 +10,7 @@ gem 'pg'
 #for authentication
 gem 'devise'
 gem 'warden'
+gem 'pundit'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
