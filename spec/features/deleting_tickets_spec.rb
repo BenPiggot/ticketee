@@ -8,7 +8,9 @@ RSpec.feature "Users can delete tickets" do
   end
 
   before do
-    visit project_ticket_path(project, ticket)
+    login_as(author)
+    assign_role!(author, :viewer, project)
+    visit project_ticket_path(project, author)
   end
 
   scenario "successfully" do
