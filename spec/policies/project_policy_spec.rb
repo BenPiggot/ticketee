@@ -4,10 +4,30 @@ RSpec.describe ProjectPolicy do
 
   let(:user) { User.new }
 
-  subject { described_class }
+  subject { ProjectPolicy }
 
-  permissions ".scope" do
-    pending "add some examples to (or delete) #{__FILE__}"
+  context "policy scope" do 
+    subject { Pundit.policy_scope(user, Project) }
+    let!(:project) { FactoryGirl.create :project }
+    let(:user) { FactoryGirl.create :user }
+
+    it "is empty for anonymous users" do
+      expect(Pundit.policy_scope(nil, Project)).to be_empty
+    end
+
+    it "includes projects a user is allowed to view" do 
+      assign_role!(user, :viewer, project)
+      expect(subject).to include(project)
+    end
+
+    it "doesn't include projects a user is not allowed to view" do
+      expect(subject).to be_empty
+    end
+
+    it "returns all projects for admins" do
+      user.admin = true
+      expect(subject).to include(project)
+    end
   end
 
   permissions :show? do
@@ -18,7 +38,7 @@ RSpec.describe ProjectPolicy do
       expect(subject).not_to permit(nil, project)
     end
 
-    it "allows viewers of the porject" do
+    it "allows viewers of the project" do
       assign_role!(user, :viewer, project) 
       expect(subject).to permit(user, project)
     end
@@ -30,7 +50,7 @@ RSpec.describe ProjectPolicy do
 
     it "allows administrators" do
       admin = FactoryGirl.create(:user, :admin) 
-      expect(subject).to permit(user, project)
+      expect(subject).to permit(admin, project)
     end
 
     it "doesn't allow users assigned to other projects" do
