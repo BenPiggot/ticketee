@@ -23,8 +23,10 @@
 	<h2>Tickets</h2>
 
 	<ul class="actions">
-		<li><%= link_to fa_icon("plus") + " New Ticket", new_project_ticket_path(@project), 
-			class: "btn btn-success" %></li>
+		<% if policy(Ticket.new(project: @project)).create? %>
+			<li><%= link_to fa_icon("plus") + " New Ticket", new_project_ticket_path(@project), 
+				class: "btn btn-success" %></li>
+		<% end %>
 	</ul>
 </div>
 
